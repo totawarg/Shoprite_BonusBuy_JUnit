@@ -43,13 +43,7 @@ public class XSLTest {
     public static Collection<String[]> data() {
 		System.out.println("@Parameters - data()");
 		
-		xslDirectory = System.getenv("xslDirectory");
-		xslMapping = xslDirectory + "BonusBuys.xsl";
-		xmlSourceDir = xslDirectory + "/Test Files/";
-		xmlTargetDir = xslDirectory + "Test Output/";
-		xmlReferenceDir = xslDirectory + "/Reference Output/";
-		
-    	//Read list of source files...
+		//Read list of source files...
     	File xslSrcDir;
     	Collection<String[]> files = new ArrayList<String[]>();
     	
@@ -73,17 +67,17 @@ public class XSLTest {
 		
 	}
 	
-	@Test
-	public void checkInputFile() {
-		File file = new File(xmlSourceDir + inputFile);
-		assertNotEquals("Checking input file is readable: " + inputFile, false, file.canRead());
-	}
-	
-	@Test
-	public void checkReferenceFile() {
-		File refFile = new File(xmlReferenceDir + inputFile.replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
-		assertNotEquals("Checking reference file is readable: " + refFile, false, refFile.canRead());
-	}
+//	@Test
+//	public void checkInputFile() {
+//		File file = new File(xmlSourceDir + inputFile);
+//		assertNotEquals("Checking input file is readable: " + inputFile, false, file.canRead());
+//	}
+//	
+//	@Test
+//	public void checkReferenceFile() {
+//		File refFile = new File(xmlReferenceDir + inputFile.replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
+//		assertNotEquals("Checking reference file is readable: " + refFile, false, refFile.canRead());
+//	}
 	
 	@Test
 	public void xslOutputMatchesReference() {
@@ -91,7 +85,7 @@ public class XSLTest {
 		
 		//Check file exist
 		File file = new File(xmlSourceDir + inputFile);
-		//assertNotEquals("Checking input file is readable: " + inputFile, false, file.canRead());
+		assertNotEquals("Input file is not readable: " + inputFile, false, file.canRead());
 		
 		String output = performMapping(file);
 		
@@ -111,11 +105,11 @@ public class XSLTest {
 		}
 		
 		File refFile = new File(xmlReferenceDir + inputFile.replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
-		assertNotEquals("Checking reference file is readable: " + refFile, false, refFile.canRead());
+		assertNotEquals("Reference file is not readable: " + refFile, false, refFile.canRead());
 
 		String reference = readFile(refFile);
 		
-		assertEquals("Checking output " + inputFile + " matches reference failed", output.hashCode(), reference.hashCode());
+		assertEquals("Mapping output does not match reference!", output.hashCode(), reference.hashCode());
 		
 		//System.out.println("XSL mapping output matches reference file. " + inputFile);
 		
