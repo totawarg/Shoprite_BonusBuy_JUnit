@@ -29,11 +29,13 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class XSLTest {
 	
-	private static String xslMapping = "C:/Users/Martin/workspace/XSLMappings/resources/SHOPRITE-584-BonusBuys/BonusBuys.xsl";
+	private static String xslDirectory = System.getenv("xslDirectory");
 	
-	private static String xmlSourceDir = "D:/Projects/Shoprite/COR3/POS Outbound/584 Bonus Buys/Input/";
-	private static String xmlTargetDir = "D:/Projects/Shoprite/COR3/POS Outbound/584 Bonus Buys/Output/";
-	private static String xmlReferenceDir = "D:/Projects/Shoprite/COR3/POS Outbound/584 Bonus Buys/Reference Output/";
+	private static String xslMapping = xslDirectory + "BonusBuys.xsl";
+	
+	private static String xmlSourceDir = xslDirectory + "/Test Files/";
+	private static String xmlTargetDir = xslDirectory + "Test Output/";
+	private static String xmlReferenceDir = xslDirectory + "/Reference Output/";
 	
 	private String inputFile;
 	
