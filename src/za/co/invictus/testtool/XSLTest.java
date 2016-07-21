@@ -40,20 +40,27 @@ public class XSLTest {
 	private String inputFile;
 	
 	@Parameters(name="{0}")
-    public static Collection<String> data() {
-		//System.out.println("@Parameters - data()");
+    public static Collection<String[]> data() {
+		System.out.println("@Parameters - data()");
+		
+		xslDirectory = System.getenv("xslDirectory");
+		xslMapping = xslDirectory + "BonusBuys.xsl";
+		xmlSourceDir = xslDirectory + "/Test Files/";
+		xmlTargetDir = xslDirectory + "Test Output/";
+		xmlReferenceDir = xslDirectory + "/Reference Output/";
 		
     	//Read list of source files...
     	File xslSrcDir;
-    	ArrayList<String> files = new ArrayList<String>();
+    	Collection<String[]> files = new ArrayList<String[]>();
     	
         xslSrcDir = new File(xmlSourceDir);
         
         //TODO: implement FileNameFilter...
         if (xslSrcDir.isDirectory()) {
+        	System.out.println("Found " + xslSrcDir.list().length + " files!");
         	
         	for (String filename : xslSrcDir.list()) {
-        		if (filename.matches(".*xml|.*XML")) files.add(filename); 
+        		if (filename.matches(".*xml|.*XML")) files.add(new String[] {filename}); 
         		
         	}
         }
