@@ -66,6 +66,8 @@ public class XSLTest {
 	public XSLTest(String inputFile) {
 		this.inputFile = inputFile;
 		
+		//System.out.println(inputFile);
+		
 	}
 	
 //	@Test
@@ -155,7 +157,10 @@ public class XSLTest {
 
 			byte[] bResult = outputStream.toByteArray();
 			
-			return (new String(bResult)).replaceAll("<\\!--.*-->", "");
+			String map = (new String(bResult)).replaceAll("<\\!--.*?-->", "");
+			
+			//System.out.println("map=" + map);
+			return map;
 			
 		} catch (TransformerConfigurationException tce) {
 			// TODO Auto-generated catch block
@@ -178,7 +183,12 @@ public class XSLTest {
 			content=IOUtils.toByteArray(in);
 			//System.out.println(new String(content));
 			
-			return (new String(content)).replaceAll("<\\!--.*-->", "");
+			//Remove all comments.
+			//Remove all whitespace between tags (including tab, new line and carriage return).
+			String ret = (new String(content)).replaceAll("<\\!--.*?-->", "").replaceAll("\\t", "").replaceAll("\\r", "").replaceAll("\\n", "").replaceAll(" +/>", "/>");
+			
+			//System.out.println("ref=" + ret);
+			return ret;
 						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
