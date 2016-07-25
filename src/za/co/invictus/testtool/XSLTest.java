@@ -5,11 +5,11 @@ import static org.junit.Assert.assertNotEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,6 +21,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -173,8 +174,8 @@ public class XSLTest {
 		byte[] content;
 		
 		try {
-			content = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-
+			FileInputStream in=new FileInputStream(file);
+			content=IOUtils.toByteArray(in);
 			//System.out.println(new String(content));
 			
 			return (new String(content)).replaceAll("<\\!--.*-->", "");
