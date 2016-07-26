@@ -90,22 +90,9 @@ public class XSLTest {
 		File file = new File(xmlSourceDir + inputFile);
 		assertNotEquals("Input file is not readable: " + inputFile, false, file.canRead());
 		
-		String output = performMapping(file);
+		String output = performMapping( file);
 		
-		File outFile = new File(xmlTargetDir + inputFile.replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
-		try {
-			FileWriter writer = new FileWriter(outFile);
-			writer.write(output);
-			writer.flush();
-			writer.close();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		File refFile = new File(xmlReferenceDir + inputFile.replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
 		assertNotEquals("Reference file is not readable: " + refFile, false, refFile.canRead());
@@ -156,6 +143,21 @@ public class XSLTest {
 			transformer.transform(inputFile, output);
 
 			byte[] bResult = outputStream.toByteArray();
+			
+			File outFile = new File(xmlTargetDir + file.getName().replaceAll("\\.XML|\\.xml", ".OUTPUT.XML"));
+			try {
+				FileWriter writer = new FileWriter(outFile);
+				writer.write((new String(bResult)));
+				writer.flush();
+				writer.close();
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			String map = (new String(bResult)).replaceAll("<\\!--.*?-->", "");
 			
